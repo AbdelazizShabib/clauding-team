@@ -80,11 +80,6 @@
 }
 
 @layer utilities {
-  /* Leaflet map z-index fix */
-  .leaflet-container {
-    z-index: 1;
-  }
-
   /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
     -ms-overflow-style: none;
@@ -100,4 +95,43 @@
   [dir="rtl"] .translate-x-5 {
     --tw-translate-x: -1.25rem;
   }
+}
+
+/* =========================================================================
+   Leaflet z-index overrides — MUST be outside @layer to beat leaflet.css
+   Leaflet internally sets pane z-index from 200-800+; we cap everything
+   so that dialogs/modals/overlays always render on top.
+   ========================================================================= */
+.leaflet-container {
+  z-index: 0 !important;
+  isolation: isolate;
+}
+.leaflet-pane {
+  z-index: auto !important;
+}
+.leaflet-tile-pane    { z-index: 1 !important; }
+.leaflet-overlay-pane { z-index: 2 !important; }
+.leaflet-shadow-pane  { z-index: 3 !important; }
+.leaflet-marker-pane  { z-index: 4 !important; }
+.leaflet-tooltip-pane { z-index: 5 !important; }
+.leaflet-popup-pane   { z-index: 6 !important; }
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 7 !important;
+}
+.leaflet-control {
+  z-index: 7 !important;
+}
+
+/* Dialogs/overlays always above everything */
+[data-radix-popper-content-wrapper] { z-index: 9999 !important; }
+[role="dialog"]       { z-index: 9999 !important; }
+[role="alertdialog"]  { z-index: 9999 !important; }
+[data-state="open"].fixed { z-index: 9999 !important; }
+.fixed[data-radix-portal] { z-index: 9999 !important; }
+
+/* Radix overlay backdrop */
+[data-radix-dialog-overlay],
+[data-radix-alert-dialog-overlay] {
+  z-index: 9998 !important;
 }

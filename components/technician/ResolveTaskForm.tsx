@@ -3,8 +3,7 @@
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Upload, Camera, CheckCircle } from "lucide-react";
-import { resolveTask } from "@/lib/technician/actions";
-import { createClient } from "@/lib/supabase/client";
+import { resolveTask, uploadAfterPhoto } from "@/lib/technician/actions";
 import toast from "react-hot-toast";
 
 interface ResolveTaskFormProps {
@@ -46,38 +45,19 @@ export function ResolveTaskForm({ reportId }: ResolveTaskFormProps) {
     setLoading(true);
 
     try {
-      // Upload photo first
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error("Unauthorized");
-        setLoading(false);
-        return;
-      }
+      // Upload photo via server action (uses service-role key)
+      const formData = new FormData();
+      formData.append("reportId", reportId);
+      formData.append("photo", photo);
 
-      const timestamp = Date.now();
-      const ext = photo.name.split(".").pop() || "jpg";
-      const storagePath = `${reportId}/after_${timestamp}.${ext}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("report-photos")
-        .upload(storagePath, photo, { cacheControl: "3600", upsert: false });
-
-      if (uploadError) {
+      const uploadResult = await uploadAfterPhoto(formData);
+      if (!uploadResult.ok) {
         toast.error(t("resolve.error"));
         setLoading(false);
         return;
       }
 
-      // Insert photo record
-      await supabase.from("report_photos").insert({
-        report_id: reportId,
-        storage_path: storagePath,
-        photo_type: "after" as const,
-        uploaded_by: user.id,
-      });
-
-      // Now resolve
+      // Now resolve the task via server action
       const result = await resolveTask({ reportId, cost: costNum });
 
       if (result.ok) {
@@ -188,4 +168,3 @@ export function ResolveTaskForm({ reportId }: ResolveTaskFormProps) {
     </form>
   );
 }
-

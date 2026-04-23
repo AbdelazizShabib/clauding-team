@@ -17,7 +17,15 @@ export default async function QueuePage({ params }: QueuePageProps) {
 
   if (!profile?.district_id) return null;
 
-  const queue = await getQueue(supabase, profile.district_id);
+  // Get active cross-district permissions
+  const { getActiveCrossDistrictPermission } = await import("@/lib/manager/queries");
+  const crossDistrictAccess = await getActiveCrossDistrictPermission(supabase, profile.id);
+  const allowedDistrictIds = [
+    profile.district_id,
+    ...crossDistrictAccess.map((req) => req.target_district_id),
+  ];
+
+  const queue = await getQueue(supabase, allowedDistrictIds);
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
   // Check for duplicate candidates per report

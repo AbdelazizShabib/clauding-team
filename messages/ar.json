@@ -607,7 +607,13 @@
     },
     "situationRoom": {
       "title": "غرفة العمليات",
-      "subtitle": "جميع البلاغات في قسمك"
+      "subtitle": "جميع البلاغات في قسمك",
+      "tabMyDistrict": "قسمي",
+      "tabCityWide": "بلاغات المدينة",
+      "cityWideSubtitle": "بلاغات نشطة في أقسام أخرى",
+      "requestAccess": "طلب صلاحية التعامل",
+      "accessGranted": "لديك صلاحية",
+      "otherDistrict": "القسم: {district}"
     },
     "filters": {
       "status": "الحالة",

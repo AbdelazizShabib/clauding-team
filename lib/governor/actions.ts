@@ -74,28 +74,46 @@ export async function approveCrossDistrict(requestId: string) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return { error: "Unauthorized" };
+  if (!user) {
+    console.error("[approveCrossDistrict] No user from getUser()");
+    return { error: "Unauthorized" };
+  }
 
+  // Fetch the request (simple query, no joins)
   const { data: request, error: fetchErr } = await supabase
     .from("cross_district_requests")
-    .select("*, requesting_dm:profiles!cross_district_requests_requesting_dm_id_fkey(id, full_name)")
+    .select("*")
     .eq("id", requestId)
-    .single();
+    .maybeSingle();
 
-  if (fetchErr || !request) return { error: "Request not found" };
+  if (fetchErr) {
+    console.error("[approveCrossDistrict] fetch error:", fetchErr.message);
+    return { error: "Request not found" };
+  }
+  if (!request) {
+    console.error("[approveCrossDistrict] request is null for id:", requestId);
+    return { error: "Request not found" };
+  }
+
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
 
   const { error } = await supabase
     .from("cross_district_requests")
     .update({
       status: "approved" as const,
-      approved_by_governor: user.id,
+      decided_at: now.toISOString(),
+      expires_at: expiresAt.toISOString(),
     })
     .eq("id", requestId);
 
-  if (error) return { error: error.message };
+  if (error) {
+    console.error("[approveCrossDistrict] update error:", error.message, error.details, error.hint);
+    return { error: error.message };
+  }
 
   // Notify the DM
-  await supabase.from("notifications").insert({
+  const { error: notifErr } = await supabase.from("notifications").insert({
     user_id: request.requesting_dm_id,
     type: "cross_district_decision" as const,
     title_en: "Cross-district access approved",
@@ -104,6 +122,13 @@ export async function approveCrossDistrict(requestId: string) {
     body_ar: "تم الموافقة على طلبك للوصول عبر الأقسام. تنتهي الصلاحية خلال ٢٤ ساعة.",
     link_url: "/manager",
   });
+  if (notifErr) {
+    console.error("[approveCrossDistrict] notification error:", notifErr.message);
+  }
+
+  // Revalidate the DM's queue so they see the newly granted access
+  revalidatePath("/manager", "layout");
+  revalidatePath("/[locale]/manager", "layout");
 
   revalidatePath("/governor/cross-district-approvals");
   return { success: true };
@@ -128,7 +153,7 @@ export async function rejectCrossDistrict(requestId: string, note?: string) {
     .from("cross_district_requests")
     .update({
       status: "rejected" as const,
-      approved_by_governor: user.id,
+      decided_at: new Date().toISOString(),
     })
     .eq("id", requestId);
 
