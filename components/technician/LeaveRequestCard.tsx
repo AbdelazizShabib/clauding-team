@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Calendar, X } from "lucide-react";
 import { cancelLeaveRequest } from "@/lib/technician/actions";
 import { cn } from "@/lib/utils/cn";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import type { LeaveStatus } from "@/types/domain";
 
 interface LeaveRequestCardProps {
@@ -101,3 +101,4 @@ export function LeaveRequestCard({
     </div>
   );
 }
+

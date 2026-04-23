@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Upload, Camera, CheckCircle } from "lucide-react";
 import { resolveTask } from "@/lib/technician/actions";
 import { createClient } from "@/lib/supabase/client";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface ResolveTaskFormProps {
   reportId: string;
@@ -188,3 +188,4 @@ export function ResolveTaskForm({ reportId }: ResolveTaskFormProps) {
     </form>
   );
 }
+

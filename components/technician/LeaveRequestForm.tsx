@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { CalendarPlus } from "lucide-react";
 import { requestLeave } from "@/lib/technician/actions";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface LeaveRequestFormProps {
   onSuccess?: () => void;
@@ -104,3 +104,4 @@ export function LeaveRequestForm({ onSuccess }: LeaveRequestFormProps) {
     </form>
   );
 }
+

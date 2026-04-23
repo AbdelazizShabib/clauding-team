@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { AlertTriangle, Check, User } from "lucide-react";
 import { assignTechnician } from "@/lib/manager/actions";
 import { cn } from "@/lib/utils/cn";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface TechnicianInfo {
   id: string;

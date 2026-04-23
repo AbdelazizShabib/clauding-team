@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { overridePublicFlag, addGovernorNote } from "@/lib/governor/actions";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { PriorityBadge } from "@/components/common/PriorityBadge";
@@ -187,3 +187,4 @@ export function ReportDetailView({ report }: ReportDetailViewProps) {
     </div>
   );
 }
+

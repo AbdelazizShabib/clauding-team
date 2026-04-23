@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { approveCrossDistrict, rejectCrossDistrict } from "@/lib/governor/actions";
 import { Button } from "@/components/ui/button";
 import { formatRelative } from "@/lib/utils/format";
@@ -123,3 +123,4 @@ export function CrossDistrictInbox({ requests }: CrossDistrictInboxProps) {
     </div>
   );
 }
+

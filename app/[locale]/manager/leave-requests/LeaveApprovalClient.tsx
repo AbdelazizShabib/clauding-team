@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, X, Calendar, User } from "lucide-react";
 import { approveLeave, rejectLeave } from "@/lib/manager/actions";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface LeaveApprovalClientProps {
   leaveId: string;

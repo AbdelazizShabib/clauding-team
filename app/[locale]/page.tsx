@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { LandingMap } from "./LandingMap";
+import { FadeIn } from "@/components/common/FadeIn";
 
 export default async function LandingPage() {
   const locale = await getLocale();
@@ -25,54 +26,66 @@ export default async function LandingPage() {
       <main className="flex-1">
         <section className="mx-auto max-w-5xl px-4 py-16 sm:py-24">
           <div className="flex flex-col items-center text-center gap-6">
-            <div className="inline-flex items-center rounded-full bg-[#3E7D60]/10 px-4 py-1.5 text-sm text-[#3E7D60] font-medium">
-              أسوان، مصر · Aswan, Egypt
-            </div>
+            <FadeIn delay={0.1}>
+              <div className="inline-flex items-center rounded-full bg-[#3E7D60]/10 px-4 py-1.5 text-sm text-[#3E7D60] font-medium">
+                أسوان، مصر · Aswan, Egypt
+              </div>
+            </FadeIn>
 
-            <h1 className="text-4xl sm:text-6xl font-bold text-[#1C2D5B] leading-tight">
-              {t("heroTitle")}
-            </h1>
+            <FadeIn delay={0.2}>
+              <h1 className="text-4xl sm:text-6xl font-bold text-[#1C2D5B] leading-tight">
+                {t("heroTitle")}
+              </h1>
+            </FadeIn>
 
-            <p className="text-lg sm:text-xl text-[#1C2D5B]/70 max-w-2xl leading-relaxed">
-              {t("heroSubtitle")}
-            </p>
+            <FadeIn delay={0.3}>
+              <p className="text-lg sm:text-xl text-[#1C2D5B]/70 max-w-2xl leading-relaxed">
+                {t("heroSubtitle")}
+              </p>
+            </FadeIn>
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <Button size="lg" asChild className="w-full sm:w-auto">
-                <Link href={`/${locale}/signup`}>{t("cta")}</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
-                <Link href={`/${locale}/login`}>{t("staffLogin")}</Link>
-              </Button>
-            </div>
+            <FadeIn delay={0.4}>
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <Button size="lg" asChild className="w-full sm:w-auto">
+                  <Link href={`/${locale}/signup`}>{t("cta")}</Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
+                  <Link href={`/${locale}/login`}>{t("staffLogin")}</Link>
+                </Button>
+              </div>
+            </FadeIn>
 
-            <Link
-              href={`/${locale}/demo`}
-              className="text-sm text-[#3E7D60] hover:underline underline-offset-4"
-            >
-              {t("demo")} →
-            </Link>
+            <FadeIn delay={0.5}>
+              <Link
+                href={`/${locale}/demo`}
+                className="text-sm text-[#3E7D60] hover:underline underline-offset-4"
+              >
+                {t("demo")} →
+              </Link>
+            </FadeIn>
           </div>
         </section>
 
         {/* Feature pillars */}
         <section className="mx-auto max-w-5xl px-4 pb-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-2xl bg-white border border-[#DCE3EA] shadow-card p-6">
+            <FadeIn delay={0.2} className="rounded-2xl bg-white border border-[#DCE3EA] shadow-card p-6">
               <p className="text-base text-[#1C2D5B]/80 leading-relaxed">{t("pitch1")}</p>
-            </div>
-            <div className="rounded-2xl bg-white border border-[#DCE3EA] shadow-card p-6">
+            </FadeIn>
+            <FadeIn delay={0.4} className="rounded-2xl bg-white border border-[#DCE3EA] shadow-card p-6">
               <p className="text-base text-[#1C2D5B]/80 leading-relaxed">{t("pitch2")}</p>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* Map preview */}
         <section className="mx-auto max-w-5xl px-4 pb-16">
-          <p className="text-xs text-[#1C2D5B]/40 mb-2 text-center">{t("mapPreview")}</p>
-          <div className="h-48 sm:h-64 rounded-2xl overflow-hidden border border-[#DCE3EA] shadow-card">
-            <LandingMap />
-          </div>
+          <FadeIn delay={0.3}>
+            <p className="text-xs text-[#1C2D5B]/40 mb-2 text-center">{t("mapPreview")}</p>
+            <div className="h-48 sm:h-64 rounded-2xl overflow-hidden border border-[#DCE3EA] shadow-card">
+              <LandingMap />
+            </div>
+          </FadeIn>
         </section>
       </main>
 

@@ -22,12 +22,38 @@ Open [http://localhost:3000](http://localhost:3000) — it redirects to `/ar` au
 
 All demo accounts use password: **`Demo@1234`**
 
-| Role | Email |
-|------|-------|
-| Governor | `amr.lashin@aswan.gov.eg` |
-| District Manager (Aswan 1) | `dm1@aswan.gov.eg` |
-| Technician (Plumber) | `tech.plumber1@aswan.gov.eg` |
-| Citizen | `citizen1@example.com` |
+### Governor
+| Email | Name |
+|-------|------|
+| `amr.lashin@aswan.gov.eg` | Amr Helmy Hassan Lashin |
+
+### District Managers
+| Email | Name |
+|-------|------|
+| `dm1@aswan.gov.eg` | Mohamed Farouk |
+| `dm2@aswan.gov.eg` | Sara Ibrahim |
+| `dm3@aswan.gov.eg` | Karim Abdelrahman |
+| `dm4@aswan.gov.eg` | Mariam Hassan |
+
+### Technicians
+| Email | Name |
+|-------|------|
+| `tech.plumber1@aswan.gov.eg` | Ahmed Nabil |
+| `tech.plumber2@aswan.gov.eg` | Tarek Salah |
+| `tech.elec1@aswan.gov.eg` | Hossam Adel |
+| `tech.elec2@aswan.gov.eg` | Yasser Kamal |
+| `tech.road1@aswan.gov.eg` | Mahmoud Samir |
+| `tech.road2@aswan.gov.eg` | Islam Fathy |
+| `tech.sanit@aswan.gov.eg` | Omar Gamal |
+| `tech.general@aswan.gov.eg` | Youssef Hany |
+
+### Citizens
+*There are 10 seeded citizens (citizen1 to citizen10). Here are a few:*
+| Email | Name |
+|-------|------|
+| `citizen1@example.com` | Nour Adel |
+| `citizen2@example.com` | Khaled Mostafa |
+| `citizen3@example.com` | Heba Ramadan |
 
 Or visit `/ar/demo` and click any role button for instant login.
 

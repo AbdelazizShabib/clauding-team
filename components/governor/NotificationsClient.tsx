@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { markAllNotificationsRead } from "@/lib/governor/actions";
 import { Button } from "@/components/ui/button";
 import { formatRelative } from "@/lib/utils/format";
@@ -87,3 +87,4 @@ export function NotificationsClient({ notifications }: NotificationsClientProps)
     </div>
   );
 }
+
