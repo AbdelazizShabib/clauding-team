@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { UserPlus, RotateCcw, XCircle } from "lucide-react";
 import { resolveDispute } from "@/lib/manager/actions";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface DisputeResolutionClientProps {
   disputeId: string;

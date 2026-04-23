@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { toggleCategoryActive } from "@/lib/governor/actions";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -99,3 +99,4 @@ export function CategoryTable({ categories, onEdit }: CategoryTableProps) {
     </div>
   );
 }
+

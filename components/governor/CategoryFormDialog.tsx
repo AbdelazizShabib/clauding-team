@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { upsertCategory } from "@/lib/governor/actions";
 import { CategoryIconPicker } from "./CategoryIconPicker";
 import {
@@ -147,3 +147,4 @@ export function CategoryFormDialog({ open, onOpenChange, category }: CategoryFor
     </Dialog>
   );
 }
+

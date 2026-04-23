@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StepCategory } from "./StepCategory";
@@ -256,3 +256,4 @@ export function ReportWizard({ categories, districts }: ReportWizardProps) {
     </div>
   );
 }
+

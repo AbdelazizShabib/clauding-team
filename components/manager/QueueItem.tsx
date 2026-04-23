@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Check, X, Eye, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { approveReport, rejectReport } from "@/lib/manager/actions";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import type { PriorityLevel } from "@/types/domain";
 
 interface QueueItemProps {
@@ -229,3 +229,4 @@ export function QueueItem({
     </div>
   );
 }
+

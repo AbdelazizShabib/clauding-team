@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Send, XCircle } from "lucide-react";
 import { requestCrossDistrict, revokeCrossDistrict } from "@/lib/manager/actions";
 import { cn } from "@/lib/utils/cn";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface CrossDistrictClientProps {
   locale: string;

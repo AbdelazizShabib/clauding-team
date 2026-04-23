@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Play } from "lucide-react";
 import { startTask } from "@/lib/technician/actions";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface StartTaskButtonProps {
   reportId: string;
@@ -40,3 +40,4 @@ export function StartTaskButton({ reportId, disabled }: StartTaskButtonProps) {
     </button>
   );
 }
+

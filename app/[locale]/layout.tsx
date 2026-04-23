@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Toaster } from "sonner";
+import { ToastProvider } from "@/components/common/ToastProvider";
 import { routing } from "@/i18n/routing";
 import { ToastHandler } from "@/components/notifications/ToastHandler";
 import "@/app/globals.css";
@@ -51,11 +51,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
           <ToastHandler />
-          <Toaster
-            position={locale === "ar" ? "bottom-right" : "bottom-left"}
-            richColors
-            closeButton
-          />
+          <ToastProvider />
         </NextIntlClientProvider>
       </body>
     </html>
