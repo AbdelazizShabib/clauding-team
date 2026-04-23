@@ -607,7 +607,13 @@
     },
     "situationRoom": {
       "title": "Situation Room",
-      "subtitle": "All reports in your district"
+      "subtitle": "All reports in your district",
+      "tabMyDistrict": "My District",
+      "tabCityWide": "City-Wide Reports",
+      "cityWideSubtitle": "Active reports in other districts",
+      "requestAccess": "Request Access",
+      "accessGranted": "Access Granted",
+      "otherDistrict": "District: {district}"
     },
     "filters": {
       "status": "Status",

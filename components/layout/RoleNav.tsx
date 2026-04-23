@@ -44,8 +44,6 @@ function getNavItems(role: UserRole, locale: string): NavItem[] {
         { labelKey: "manager.nav.dashboard", href: `${base}/manager`, icon: LayoutDashboard },
         { labelKey: "manager.nav.reports", href: `${base}/manager/reports`, icon: ClipboardList },
         { labelKey: "manager.nav.technicians", href: `${base}/manager/technicians`, icon: Wrench },
-        { labelKey: "manager.nav.map", href: `${base}/manager/map`, icon: Map },
-        { labelKey: "manager.nav.notifications", href: `${base}/manager/notifications`, icon: Bell },
       ];
     case "governor":
       return [

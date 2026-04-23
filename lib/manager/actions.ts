@@ -158,7 +158,7 @@ export async function assignTechnician(input: {
       .from("cross_district_requests")
       .select("id")
       .eq("requesting_dm_id", user.id)
-      .eq("target_district_id", tech.district_id)
+      .eq("target_district_id", report.district_id)
       .eq("status", "approved" as const)
       .gt("expires_at", now)
       .limit(1);

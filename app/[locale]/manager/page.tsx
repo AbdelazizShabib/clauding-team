@@ -22,7 +22,16 @@ export default async function ManagerDashboard({ params }: ManagerPageProps) {
 
   const stats = await getDistrictStats(supabase, profile.district_id);
   const heatmapPoints = await getHeatmapPoints(supabase, profile.district_id);
-  const queue = await getQueue(supabase, profile.district_id);
+  
+  // Get active cross-district permissions
+  const { getActiveCrossDistrictPermission } = await import("@/lib/manager/queries");
+  const crossDistrictAccess = await getActiveCrossDistrictPermission(supabase, profile.id);
+  const allowedDistrictIds = [
+    profile.district_id,
+    ...crossDistrictAccess.map((req) => req.target_district_id),
+  ];
+
+  const queue = await getQueue(supabase, allowedDistrictIds);
   const disputes = await getPendingDisputes(supabase, profile.district_id);
 
   const heatData = heatmapPoints.map((p) => ({

@@ -7,6 +7,56 @@ import type { ReportStatus } from "@/lib/workflow/state-machine";
 
 type ActionResult<T = null> = { ok: true; data: T } | { ok: false; error: string };
 
+/**
+ * Server action to upload an after-photo using the service-role client.
+ * Called from the client form via FormData.
+ */
+export async function uploadAfterPhoto(formData: FormData): Promise<ActionResult<string>> {
+  const supabase = await createServerSupabase();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "unauthorized" };
+
+  const reportId = formData.get("reportId") as string;
+  const file = formData.get("photo") as File;
+  if (!reportId || !file) return { ok: false, error: "missing_data" };
+
+  const timestamp = Date.now();
+  const ext = file.name.split(".").pop() || "jpg";
+  const storagePath = `${reportId}/after_${timestamp}.${ext}`;
+
+  // Convert File to ArrayBuffer for server upload
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = new Uint8Array(arrayBuffer);
+
+  const { error: uploadError } = await supabase.storage
+    .from("report-photos")
+    .upload(storagePath, buffer, {
+      cacheControl: "3600",
+      upsert: false,
+      contentType: file.type || "image/jpeg",
+    });
+
+  if (uploadError) {
+    console.error("[uploadAfterPhoto] storage error:", uploadError.message);
+    return { ok: false, error: uploadError.message };
+  }
+
+  // Insert photo record
+  const { error: insertError } = await supabase.from("report_photos").insert({
+    report_id: reportId,
+    storage_path: storagePath,
+    photo_type: "after" as const,
+    uploaded_by: user.id,
+  });
+
+  if (insertError) {
+    console.error("[uploadAfterPhoto] insert error:", insertError.message);
+    return { ok: false, error: insertError.message };
+  }
+
+  return { ok: true, data: storagePath };
+}
+
 export async function startTask(input: {
   reportId: string;
 }): Promise<ActionResult> {

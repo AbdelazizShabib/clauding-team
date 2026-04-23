@@ -3,7 +3,7 @@ import type { Database } from "@/types/database";
 
 type DbClient = SupabaseClient<Database>;
 
-export async function getQueue(supabase: DbClient, districtId: string) {
+export async function getQueue(supabase: DbClient, districtIds: string[]) {
   const { data, error } = await supabase
     .from("reports")
     .select(`
@@ -13,7 +13,7 @@ export async function getQueue(supabase: DbClient, districtId: string) {
       reporter:profiles!reports_reporter_id_fkey(id, full_name, full_name_ar, phone),
       photos:report_photos(*)
     `)
-    .eq("district_id", districtId)
+    .in("district_id", districtIds)
     .eq("status", "submitted" as const)
     .order("submitted_at", { ascending: false });
 
@@ -191,5 +191,28 @@ export async function getActiveCrossDistrictPermission(supabase: DbClient, dmId:
     .gt("expires_at", now);
 
   if (error) return [];
+  return data ?? [];
+}
+
+/**
+ * Get all reports from districts OTHER than the DM's own district.
+ * Used in the "City-Wide Reports" tab.
+ */
+export async function getOtherDistrictReports(supabase: DbClient, excludeDistrictId: string) {
+  const { data, error } = await supabase
+    .from("reports")
+    .select(`
+      *,
+      category:categories(*),
+      district:districts(*),
+      reporter:profiles!reports_reporter_id_fkey(id, full_name, full_name_ar),
+      technician:profiles!reports_assigned_technician_id_fkey(id, full_name, full_name_ar, specialty)
+    `)
+    .neq("district_id", excludeDistrictId)
+    .in("status", ["submitted", "approved", "assigned", "in_progress"] as const)
+    .order("submitted_at", { ascending: false })
+    .limit(100);
+
+  if (error) throw error;
   return data ?? [];
 }
