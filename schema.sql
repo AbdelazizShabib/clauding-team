@@ -1024,3 +1024,16 @@ insert into public.notifications (user_id, type, title_en, title_ar, body_en, bo
 --   select count(*) from public.reports;      -- expect 30
 --   select count(*) from public.districts;    -- expect 4
 --   select count(*) from public.categories;   -- expect 8
+
+
+-- Allow authenticated users to upload photos
+CREATE POLICY "Allow authenticated uploads" 
+ON storage.objects FOR INSERT 
+TO authenticated 
+WITH CHECK (bucket_id = 'reports');
+
+-- Allow authenticated users to view photos
+CREATE POLICY "Allow authenticated viewing" 
+ON storage.objects FOR SELECT 
+TO authenticated 
+USING (bucket_id = 'reports');

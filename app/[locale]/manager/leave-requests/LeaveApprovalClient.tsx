@@ -38,7 +38,7 @@ export function LeaveApprovalClient({
       if (result.data.substituteName) {
         toast.success(t("approveLeave.success", { name: result.data.substituteName }));
       } else {
-        toast.warning(t("approveLeave.successNoSub"));
+        toast(t("approveLeave.successNoSub"), { icon: "⚠️" });
       }
       setShowConfirm(false);
     } else {
