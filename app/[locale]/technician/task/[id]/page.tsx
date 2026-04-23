@@ -44,7 +44,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
     const { data: signedData } = await supabase.storage.from("reports").createSignedUrls(pathsToSign, 3600);
     if (signedData) {
       signedUrls = signedData.reduce((acc, curr) => {
-        if (!curr.error && curr.signedUrl) {
+        if (!curr.error && curr.signedUrl && curr.path) {
           acc[curr.path] = curr.signedUrl;
         }
         return acc;
